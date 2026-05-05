@@ -1,0 +1,82 @@
+
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    salary INT,
+    dept_id INT
+);
+
+INSERT INTO Department VALUES (1, 'IT');
+INSERT INTO Department VALUES (2, 'HR');
+INSERT INTO Department VALUES (3, 'Sales');
+
+INSERT INTO Employee VALUES (101, 'Amit', 50000, 1);
+INSERT INTO Employee VALUES (102, 'Neha', 60000, 2);
+INSERT INTO Employee VALUES (103, 'Rahul', 45000, 1);
+INSERT INTO Employee VALUES (104, 'Priya', 70000, 3);
+INSERT INTO Employee VALUES (105, 'Kiran', 55000, NULL);
+
+SELECT Employee.emp_id, Employee.name, Department.dept_name
+FROM Employee
+INNER JOIN Department
+ON Employee.dept_id = Department.dept_id;
+
+SELECT Employee.emp_id, Employee.name, Department.dept_name
+FROM Employee
+LEFT JOIN Department
+ON Employee.dept_id = Department.dept_id;
+
+SELECT Employee.emp_id, Employee.name, Department.dept_name
+FROM Employee
+RIGHT JOIN Department
+ON Employee.dept_id = Department.dept_id;
+
+SELECT Employee.name, Department.dept_name
+FROM Employee
+CROSS JOIN Department;
+
+CREATE TABLE Manager (
+    emp_id INT,
+    emp_name VARCHAR(100),
+    manager_id INT
+);
+
+INSERT INTO Manager VALUES (1, 'Amit', NULL);
+INSERT INTO Manager VALUES (2, 'Neha', 1);
+INSERT INTO Manager VALUES (3, 'Rahul', 1);
+INSERT INTO Manager VALUES (4, 'Priya', 2);
+
+SELECT A.emp_name AS Employee, B.emp_name AS Manager
+FROM Manager A
+LEFT JOIN Manager B
+ON A.manager_id = B.emp_id;
+
+CREATE VIEW IT_Employees AS
+SELECT emp_id, name, salary
+FROM Employee
+WHERE dept_id = 1;
+
+CREATE VIEW Employee_Department_View AS
+SELECT e.emp_id, e.name, e.salary, d.dept_name
+FROM Employee e
+JOIN Department d
+ON e.dept_id = d.dept_id;
+
+SELECT * FROM IT_Employees;
+
+SELECT * FROM Employee_Department_View;
+
+UPDATE IT_Employees
+SET salary = 52000
+WHERE emp_id = 101;
+
+DROP VIEW IT_Employees;
