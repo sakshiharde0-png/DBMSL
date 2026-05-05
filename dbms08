@@ -1,0 +1,60 @@
+
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    dept VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO Employee VALUES (1, 'Amit', 'IT', 50000);
+INSERT INTO Employee VALUES (2, 'Neha', 'HR', 60000);
+INSERT INTO Employee VALUES (3, 'Rahul', 'IT', 45000);
+INSERT INTO Employee VALUES (4, 'Priya', 'Sales', 70000);
+INSERT INTO Employee VALUES (5, 'Kiran', 'HR', 55000);
+
+SELECT COUNT(*) AS total_employees
+FROM Employee;
+
+SELECT SUM(salary) AS total_salary
+FROM Employee;
+
+SELECT AVG(salary) AS average_salary
+FROM Employee;
+
+SELECT MAX(salary) AS highest_salary
+FROM Employee;
+
+SELECT MIN(salary) AS lowest_salary
+FROM Employee;
+
+SELECT dept, COUNT(*) AS total_employees
+FROM Employee
+GROUP BY dept;
+
+SELECT dept, SUM(salary) AS total_salary
+FROM Employee
+GROUP BY dept;
+
+SELECT dept, AVG(salary) AS avg_salary
+FROM Employee
+GROUP BY dept;
+
+SELECT dept, COUNT(*) AS total_employees
+FROM Employee
+GROUP BY dept
+HAVING COUNT(*) > 1;
+
+SELECT dept, AVG(salary) AS avg_salary
+FROM Employee
+GROUP BY dept
+HAVING AVG(salary) > 55000;
+
+SELECT dept, SUM(salary) AS total_salary
+FROM Employee
+GROUP BY dept
+HAVING SUM(salary) > 100000;
+
