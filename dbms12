@@ -1,0 +1,79 @@
+CREATE DATABASE Hemant; 
+
+USE Hemant;
+
+CREATE TABLE Employee (     
+    ->     emp_id INT PRIMARY KEY, 
+    ->     name VARCHAR(100), 
+    ->     salary INT 
+    -> ); 
+ 
+CREATE TABLE Salary_Log ( 
+    ->     log_id INT AUTO_INCREMENT PRIMARY KEY, 
+    ->     emp_id INT, 
+    ->     old_salary INT, 
+    ->     new_salary INT 
+    -> ); 
+ 
+INSERT INTO Employee VALUES 
+    -> (1, 'harry', 20000), 
+    -> (2, 'raj', 30000), 
+    -> (3, 'Sainath', 40000); 
+
+SELECT * FROM Employee; 
+ 
+DELIMITER $$ mysql> 
+
+  CREATE TRIGGER before_insert_employee 
+    -> BEFORE INSERT ON Employee 
+    -> FOR EACH ROW 
+    -> BEGIN 
+    ->     IF NEW.salary < 10000 THEN 
+    ->         SET NEW.salary = 10000; 
+    ->     END IF; 
+    -> END $$ 
+ 
+DELIMITER ; 
+
+INSERT INTO Employee VALUES (4, 'Amit', 5000); 
+ 
+SELECT * FROM Employee; 
+ 
+DELIMITER $$ 
+  
+CREATE TRIGGER a er_update_salary 
+    -> AFTER UPDATE ON Employee 
+    -> FOR EACH ROW 
+    -> BEGIN 
+    ->     INSERT INTO Salary_Log(emp_id, old_salary, new_salary) 
+    ->     VALUES (OLD.emp_id, OLD.salary, NEW.salary); 
+    -> END $$ 
+ 
+DELIMITER ; 
+
+UPDATE Employee 
+    -> SET salary = 35000 
+    -> WHERE emp_id = 1; 
+ 
+SELECT * FROM Employee;  
+
+SELECT * FROM Salary_Log; 
+
+DELIMITER $$
+   
+ CREATE TRIGGER before_delete_employee 
+    -> BEFORE DELETE ON Employee 
+    -> FOR EACH ROW 
+    -> BEGIN 
+    ->     INSERT INTO Salary_Log(emp_id, old_salary, new_salary) 
+    ->     VALUES (OLD.emp_id, OLD.salary, 0); 
+    -> END $$ 
+ 
+DELIMITER ; 
+
+DELETE FROM Employee WHERE emp_id = 2; 
+ 
+SELECT * FROM Employee;
+ 
+SELECT * FROM Salary_Log; 
+
