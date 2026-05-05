@@ -1,0 +1,24 @@
+use CollegeDB
+
+db.students.find()
+
+db.students.find({Branch:"CS"})
+
+db.students.insertMany([
+ {SeatNo:1, Name:"Anu", Branch:"CS"},
+ {SeatNo:2, Name:"Riya", Branch:"IT"}
+])
+
+db.students.updateOne(
+ {SeatNo:1},
+ {$set:{Branch:"Mechanical"}}
+)
+
+db.students.updateMany(
+ {Branch:"CS"},
+ {$set:{Class:"FY"}}
+)
+
+db.students.deleteOne({SeatNo:2})
+
+db.students.deleteMany({Branch:"Mechanical"})
