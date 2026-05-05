@@ -1,0 +1,61 @@
+
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    salary INT,
+    dept_id INT
+);
+
+CREATE TABLE Employee_Backup (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    salary INT,
+    dept_id INT
+);
+
+INSERT INTO Employee VALUES (1, 'Amit', 50000, 10);
+INSERT INTO Employee VALUES (2, 'Neha', 60000, 20);
+INSERT INTO Employee VALUES (3, 'Rahul', 45000, 10);
+INSERT INTO Employee VALUES (4, 'Priya', 70000, 30);
+
+INSERT INTO Employee_Backup VALUES (3, 'Rahul', 45000, 10);
+INSERT INTO Employee_Backup VALUES (4, 'Priya', 70000, 30);
+INSERT INTO Employee_Backup VALUES (5, 'Kiran', 55000, 20);
+INSERT INTO Employee_Backup VALUES (6, 'Suresh', 65000, 40);
+
+UPDATE Employee
+SET salary = 52000
+WHERE emp_id = 1;
+
+UPDATE Employee
+SET salary = 75000
+WHERE dept_id = 30;
+
+DELETE FROM Employee
+WHERE emp_id = 2;
+
+DELETE FROM Employee
+WHERE salary < 50000;
+
+SELECT emp_id, name, salary, dept_id FROM Employee
+UNION
+SELECT emp_id, name, salary, dept_id FROM Employee_Backup;
+
+SELECT emp_id, name, salary, dept_id FROM Employee
+UNION ALL
+SELECT emp_id, name, salary, dept_id FROM Employee_Backup;
+
+SELECT e.emp_id, e.name, e.salary, e.dept_id
+FROM Employee e
+INNER JOIN Employee_Backup b
+ON e.emp_id = b.emp_id;
+
+SELECT e.emp_id, e.name, e.salary, e.dept_id
+FROM Employee e
+LEFT JOIN Employee_Backup b
+ON e.emp_id = b.emp_id
+WHERE b.emp_id IS NULL;
