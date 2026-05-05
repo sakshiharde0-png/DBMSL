@@ -1,0 +1,60 @@
+
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    salary INT CHECK (salary > 0),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+
+INSERT INTO Department (dept_id, dept_name) VALUES
+(1, 'IT'),
+(2, 'HR'),
+(3, 'Sales');
+
+INSERT INTO Employee (emp_id, name, salary, dept_id) VALUES
+(101, 'Amit', 50000, 1),
+(102, 'Neha', 60000, 2),
+(103, 'Rahul', 45000, 1),
+(104, 'Priya', 70000, 3);
+
+UPDATE Employee
+SET salary = 55000
+WHERE dept_id = 1 AND salary < 50000;
+
+UPDATE Employee
+SET salary = 65000
+WHERE dept_id = 2 OR name = 'Neha';
+
+
+DELETE FROM Employee
+WHERE dept_id = 3 AND salary < 50000;
+
+DELETE FROM Employee
+WHERE name = 'Rahul' OR salary > 80000;
+
+
+SELECT * FROM Department;
+
+SELECT * FROM Employee;
+
+SELECT name, salary
+FROM Employee
+WHERE dept_id = 1 AND salary > 50000;
+
+ALTER TABLE Employee
+ADD email VARCHAR(100);
+
+TRUNCATE TABLE Employee;
+
+ DROP TABLE Employee;
