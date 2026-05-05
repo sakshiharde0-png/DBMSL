@@ -1,0 +1,50 @@
+
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Account (
+    acc_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    balance INT
+);
+
+INSERT INTO Account VALUES (1, 'Amit', 5000);
+INSERT INTO Account VALUES (2, 'Neha', 7000);
+
+START TRANSACTION;
+
+UPDATE Account
+SET balance = balance - 1000
+WHERE acc_id = 1;
+
+UPDATE Account
+SET balance = balance + 1000
+WHERE acc_id = 2;
+
+SAVEPOINT before_extra_update;
+
+UPDATE Account
+SET balance = balance - 500
+WHERE acc_id = 1;
+
+ROLLBACK TO before_extra_update;
+
+COMMIT;
+
+START TRANSACTION;
+
+UPDATE Account
+SET balance = balance - 2000
+WHERE acc_id = 1;
+
+UPDATE Account
+SET balance = balance + 2000
+WHERE acc_id = 2;
+
+-- IF ERROR OCCURS
+ROLLBACK;
+
+-- IF SUCCESS
+COMMIT;
+```
