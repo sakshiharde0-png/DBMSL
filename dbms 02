@@ -1,0 +1,82 @@
+create database hemant; 
+Query OK, 1 row affected (0.01 sec) 
+ 
+mysql> use hemant; 
+Database changed 
+ 
+CREATE TABLE Students ( 
+       Student_ID VARCHAR(10) PRIMARY KEY, 
+       Name VARCHAR(50) NOT NULL, 
+       Email VARCHAR(100) NOT NULL, 
+       Department VARCHAR(50) NOT NULL 
+       ); 
+
+INSERT INTO Students VALUES
+("SE001", "Hemant Jadhav", "hemant.jadhav@gmail.com", "Computer Engineering");
+
+INSERT INTO Students VALUES
+("SE002", "Rohit Pal", "rohit.pal@gmail.com", "IT"),
+("SE003", "Aditya Roy", "aditya.roy@gmail.com", "ENTC");
+
+mysql> SELECT * FROM Students;
+
+CREATE TABLE Books ( 
+    -> Book_ID VARCHAR(20) PRIMARY KEY, 
+    -> Title VARCHAR(200) NOT NULL, 
+    -> Author VARCHAR(100) NOT NULL, 
+    -> Publisher VARCHAR(100) NOT NULL, 
+    -> Year INT NOT NULL 
+    -> ); 
+
+mysql> insert into Books values
+
+mysql> select * from Books; 
+
+ CREATE TABLE Borrowings ( 
+       Borrow_ID INT PRIMARY KEY, 
+       Student_ID VARCHAR(10) NOT NULL, 
+       Book_ID VARCHAR(20) NOT NULL, 
+       Borrow_Date DATE NOT NULL, 
+       Return_Date DATE NOT NULL, 
+       FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID), 
+       FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) 
+       ); 
+
+insert into Borrowings values 
+       (1, "SE001", "B001", "2026-01-05", "2026-01-20"),  
+       (2, "SE002", "B002", "2026-01-17", "2026-02-02"),  
+       (3, "SE003", "B003", "2026-01-25", "2026-02-12"); 
+
+
+mysql> select * from Borrowings; 
+
+CREATE TABLE Fines ( 
+       Fine_ID INT PRIMARY KEY, 
+       Borrow_ID INT NOT NULL, 
+       Fine_Amount DECIMAL(10, 2) NOT NULL CHECK (Fine_Amount >= 0), 
+       Payment_Status VARCHAR(20) NOT NULL CHECK (Payment_Status IN ('Paid', 'Unpaid')), 
+       FOREIGN KEY (Borrow_ID) REFERENCES Borrowings(Borrow_ID) 
+       ); 
+
+ insert into Fines values 
+     (1, 1, 0.00, 'Paid'), 
+     (2, 2, 5.00, 'Unpaid'), 
+     (3, 3, 15.00, 'Unpaid'); 
+
+
+mysql> select * from Fines; 
+
+alter table Students 
+    -> add column Phone varchar(20); 
+
+mysql> select * from Students; 
+  
+mysql> rename table Fines to FinePayments; 
+
+mysql> truncate table Borrowing; 
+
+mysql> drop table FinePayments; 
+
+mysql> drop database hemant; 
+  
+
