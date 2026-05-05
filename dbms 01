@@ -1,8 +1,6 @@
 create database hemant; 
-Query OK, 1 row affected (0.01 sec) 
- 
+
 mysql> use hemant; 
-Database changed 
  
 CREATE TABLE Students ( 
        Student_ID VARCHAR(10) PRIMARY KEY, 
