@@ -1,0 +1,85 @@
+CREATE DATABASE Hemant; 
+
+USE Hemant; Database changed mysql> CREATE TABLE Department ( 
+           dept_id INT PRIMARY KEY, 
+           dept_name VARCHAR(50) 
+      ); 
+
+mysql> CREATE TABLE Employee (    
+           emp_id INT PRIMARY KEY, 
+           name VARCHAR(100), 
+           salary INT, 
+           dept_id INT 
+       ); 
+
+ mysql> INSERT INTO Department VALUES 
+       (1, 'IT'), 
+       (2, 'HR'), 
+       (3, 'Sales'); 
+
+INSERT INTO Employee VALUES 
+       (101, 'harry', 40000, 1), 
+       (102, 'om', 30000, 2), 
+       (103, 'raj', 45000, 1), 
+       (104, 'ram', 200000, NULL); 
+
+SELECT * FROM Department; 
+
+SELECT * FROM Employee; 
+
+ SELECT e.emp_id, e.name, d.dept_name 
+       FROM Employee e 
+       INNER JOIN Department d 
+       ON e.dept_id = d.dept_id; 
+
+SELECT e.emp_id, e.name, d.dept_name 
+       FROM Employee e 
+       LEFT JOIN Department d 
+       ON e.dept_id = d.dept_id; 
+
+SELECT e.emp_id, e.name, d.dept_name 
+      FROM Employee e 
+      RIGHT JOIN Department d 
+      ON e.dept_id = d.dept_id; 
+
+SELECT e.emp_id, e.name, d.dept_name 
+       FROM Employee e 
+       LEFT JOIN Department d 
+       ON e.dept_id = d.dept_id 
+       UNION 
+       SELECT e.emp_id, e.name, d.dept_name 
+       FROM Employee e 
+       RIGHT JOIN Department d     
+       ON e.dept_id = d.dept_id; 
+
+ SELECT e1.name AS Employee1, e2.name AS Employee2, e1.dept_id 
+       FROM Employee e1 
+       JOIN Employee e2 
+       ON e1.dept_id = e2.dept_id 
+       WHERE e1.emp_id <> e2.emp_id; 
+
+CREATE VIEW EmployeeView AS 
+       SELECT e.emp_id, e.name, d.dept_name, e.salary 
+       FROM Employee e 
+       INNER JOIN Department d 
+       ON e.dept_id = d.dept_id; 
+
+ SELECT * FROM EmployeeView; 
+
+CREATE VIEW HighSalaryView AS 
+    -> SELECT name, salary 
+    -> FROM Employee 
+    -> WHERE salary > 35000; 
+
+ SELECT * FROM HighSalaryView; 
+
+ DROP VIEW HighSalaryView; 
+
+SELECT * FROM EmployeeView; 
+
+
+
+
+
+
+
