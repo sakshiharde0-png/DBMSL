@@ -1,0 +1,102 @@
+CREATE DATABASE Hemant; 
+
+USE Hemant; 
+
+CREATE TABLE Departments ( 
+       Department_ID INT PRIMARY KEY, 
+       Department_Name VARCHAR(50) NOT NULL 
+       ); 
+
+INSERT INTO Departments VALUES 
+       (1, 'Sales'), 
+       (2, 'Marke ng'), 
+       (3, 'IT'); 
+
+SELECT * FROM Departments; 
+
+CREATE TABLE Employees ( 
+       Employee_ID INT PRIMARY KEY,     
+       Name VARCHAR(50) NOT NULL, 
+       Salary DECIMAL(10, 2) NOT NULL, 
+       Department VARCHAR(50) NOT NULL  ); 
+
+INSERT INTO Employees VALUES 
+       (1, "Hemant Jadhav", 70000.00, "Marke ng"), 
+       (2, "Rohit Pa l", 60000.00, "IT"), 
+       (3, "Aditya ROy", 50000.00, "Sales"); 
+
+SELECT * FROM Employees; 
+
+UPDATE Employees 
+       SET Salary = Salary * 1.1 
+       WHERE Department = 'Sales'; 
+
+DELETE FROM Employees 
+       WHERE Department = 'Marke ng'; 
+
+SELECT * FROM Employees; 
+
+ SELECT Employee_ID, Name, Salary, Salary * 0.1 AS Bonus 
+      FROM Employees; 
+
+SELECT Employee_ID, Name, Department 
+       FROM Employees 
+       WHERE Department = 'Sales' AND Salary > 50000; 
+
+SELECT Department 
+       FROM Employees 
+       UNION 
+       SELECT Department_Name 
+       FROM Departments; 
+
+SELECT Employee_ID, Name     
+       FROM Employees 
+       WHERE Name LIKE '%Roy%'; 
+
+SELECT Employee_ID, UPPER(Name) AS Upper_Name 
+      FROM Employees; 
+
+CREATE USER 'user1'@'%' IDENTIFIED BY 'password1'; 
+
+CREATE USER 'user2'@'%' IDENTIFIED BY 'password2'; 
+
+GRANT SELECT, INSERT, UPDATE ON Employees TO 'user1'@'%'; 
+
+GRANT DELETE ON Employees TO 'user2'@'%'; 
+
+REVOKE UPDATE ON Employees FROM 'user1'@'%'; 
+
+CREATE ROLE 'Manager'; 
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON Employees TO 'Manager'; 
+
+GRANT 'Manager' TO 'user1'@'%'; 
+
+START TRANSACTION; 
+
+INSERT INTO Employees (Employee_ID, Name, Salary, Department) 
+       VALUES (4, 'Alice Johnson', 80000.00, 'IT'); 
+
+COMMIT; 
+
+START TRANSACTION; 
+
+INSERT INTO Employees (Employee_ID, Name, Salary, Department) 
+      VALUES (5, 'Mike Brown', 90000.00, 'Sales'); 
+
+ROLLBACK; 
+
+START TRANSACTION; 
+
+ INSERT INTO Employees (Employee_ID, Name, Salary, Department) 
+      VALUES (6, 'Emma Davis', 100000.00, 'Marke ng'); 
+
+SAVEPOINT my_savepoint; 
+
+INSERT INTO Employees (Employee_ID, Name, Salary, Department) 
+      VALUES (7, 'Tom White', 110000.00, 'IT'); 
+
+ROLLBACK TO my_savepoint; 
+
+COMMIT; 
+
