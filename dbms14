@@ -1,0 +1,12 @@
+db.students.aggregate([
+ {$match:{Branch:"CS"}},
+ {$group:{_id:"$Branch", total:{$sum:1}}}
+])
+
+db.students.aggregate([
+ {$group:{_id:null, avgSeat:{$avg:"$SeatNo"}}}
+])
+
+db.students.createIndex({SeatNo:1})
+
+db.students.createIndex({Name:1, Branch:1})
